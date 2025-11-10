@@ -28,8 +28,8 @@ Ziel: Prüfen, ob ein Zug für einen Spieler an einer bestimmten Position erlaub
 | ---------------------------------------------------------- | -------- | --------------- |
 | `player=1,2`                                               | gültig   | Prüfung erlaubt |
 | `player≠1,2`                                               | ungültig | Exception       |
-| `row,col` ∈ [0,7]                                          | gültig   | Prüfung erlaubt |
-| `row,col` ∉ [0,7]                                          | ungültig | Exception       |
+| `row,col` = [0,7]                                          | gültig   | Prüfung erlaubt |
+| `row,col` ≠ [0,7]                                          | ungültig | Exception       |
 | Feld leer + Gegnerstein in Richtung + eigener Stein danach | gültig   | `true`          |
 | Feld leer + kein Gegnerstein in Richtung                   | gültig   | `false`         |
 | Feld besetzt                                               | ungültig | `false`         |
