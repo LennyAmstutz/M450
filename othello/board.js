@@ -12,14 +12,14 @@ const initRowColPlayer = [
 ];
 
 const shifts = [
-  [-1, +0], // north
-  [-1, +1], // north east
-  [+0, +1], // east
-  [+1, +1], // south east
-  [+1, +0], // south
-  [+1, -1], // south west
-  [+0, -1], // west
-  [-1, -1], // north west
+  [-1, +0],
+  [-1, +1],
+  [+0, +1],
+  [+1, +1],
+  [+1, +0],
+  [+1, -1], 
+  [+0, -1],
+  [-1, -1],
 ];
 
 export class Board {
@@ -86,7 +86,6 @@ export class Board {
         }
       }
     });
-    // NOTE: Sets are unique by reference, not by value; de-duplicate using a Map.
     const dedup = (moves) => {
       const identify = (move) => `${move[0]}:${move[1]}`;
       const unique = new Map();
@@ -94,6 +93,23 @@ export class Board {
       return new Set(unique.values());
     };
     return dedup(validMoves);
+  }
+
+  isValidMove(player, row, col) {
+    if (player !== one && player !== two) {
+      throw new RangeError(`illegal player ${player}`);
+    }
+    if (row < 0 || row >= dimension || col < 0 || col >= dimension) {
+      throw new RangeError(`move [${row}/${col}] out of bounds`);
+    }
+    if (this.fields[row][col] !== empty) {
+      return false;
+    }
+
+    const valid = [...this.validMoves(player)].some(
+      (move) => move[0] === row && move[1] === col
+    );
+    return valid;
   }
 
   play(row, col, player) {
@@ -130,16 +146,13 @@ export class Board {
       ) {
         const fieldValue = newBoard.fields[field[0]][field[1]];
         if (fieldValue == otherPlayer) {
-          // opponent's field: mark for takeover
           chain.push([field[0], field[1]]);
         } else if (fieldValue == player) {
-          // own field at the end of the chain: take over fields
           for (const [r, c] of chain) {
             newBoard.fields[r][c] = player;
           }
           break;
         } else {
-          // empty field: nothing to capture in this direction
           break;
         }
       }
