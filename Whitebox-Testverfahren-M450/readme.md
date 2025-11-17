@@ -1,0 +1,1 @@
+Die Wahl zwischen JavaScript und TypeScript hat keinen Einfluss auf die Testfälle oder die Codeüberdeckung, weil getestet wird, was die Funktion macht – nicht in welcher Sprache sie geschrieben ist. Deno führt beide Sprachen gleich aus, darum bleiben Testablauf und Testergebnisse identisch.
